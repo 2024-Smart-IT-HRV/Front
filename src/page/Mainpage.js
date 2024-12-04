@@ -18,7 +18,7 @@ const MainPage = () => {
           <SectionDescription>
             학습 일정을 기록하고, 실시간 집중력 데이터를 확인하세요.
           </SectionDescription>
-          <Button onClick={() => navigate("/study-schedule")}>
+          <Button onClick={() => navigate("/scheduler")}>
             일정 관리하기
           </Button>
         </Section>
@@ -27,7 +27,7 @@ const MainPage = () => {
           <SectionDescription>
             심박수 기반 집중도를 분석하고 실시간 그래프로 확인하세요.
           </SectionDescription>
-          <Button onClick={() => navigate("/focus-analysis")}>
+          <Button onClick={() => navigate("/studyroom")}>
             집중도 분석하기
           </Button>
         </Section>
