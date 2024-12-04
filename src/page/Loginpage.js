@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-
 // Styled Components
 const Container = styled.div`
-  background-color: #f8f9fa;
+  background: linear-gradient(to bottom, #333333, #000000);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,9 +21,11 @@ const Card = styled.div`
   max-width: 400px;
 `;
 
-const Title = styled.h3`
-  text-align: center;
-  margin-bottom: 1.5rem;
+const Logo = styled.img`
+  display: block;
+  margin: 0 auto 1.5rem;
+  width: 62px;
+  height: 58px;
 `;
 
 const Form = styled.form`
@@ -70,18 +71,7 @@ const Button = styled.button`
 const Footer = styled.div`
   text-align: center;
   margin-top: 1rem;
-`;
-
-const Link = styled.a`
-  color: #000000;
   text-decoration: underline;
-`;
-
-const Logo = styled.img`
-  display: block; /* 가운데 정렬 */
-  margin: 0 auto 1.5rem; /* 위, 아래 간격 설정 (중앙 정렬 포함) */
-  width: 62x; /* 너비 */
-  height: 58px; /* 높이 */
 `;
 
 const Login = () => {
@@ -95,43 +85,53 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await api.post("/auth/login", { email, password });
+
+      // 로그인 성공 메시지
       setMessage(response.data.message || "로그인 성공!");
-      localStorage.setItem("token", response.data.token); // JWT 저장
-      navigate("/loading"); // 메인 페이지로 이동
+
+      // JWT 저장
+      localStorage.setItem("token", response.data.token);
+
+      // HRV 데이터 여부 확인
+      const hasHRVData = response.data.hrvData; // 서버 응답에서 HRV 데이터 확인
+
+      // 페이지 이동
+      if (hasHRVData) {
+        navigate("/main"); // HRV 데이터가 있을 경우 메인 페이지로 이동
+      } else {
+        navigate("/loading"); // HRV 데이터가 없을 경우 로딩 페이지로 이동
+      }
     } catch (error) {
+      // 로그인 실패 메시지
       setMessage(error.response?.data?.error || "로그인 실패");
     }
   };
-  
 
   return (
     <Container>
       <Card>
-      <Logo src="/logo.png" alt="Logo" />
-        {/* <Title>Login</Title> */}
+        <Logo src="/logo.png" alt="Logo" />
         <Form onSubmit={handleSubmit}>
-          <Label>Email</Label>
+          <Label>이메일</Label>
           <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            placeholder="이메일을 입력하세요"
             required
           />
-          <Label>Password</Label>
+          <Label>비밀번호</Label>
           <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            placeholder="비밀번호를 입력하세요"
             required
           />
-          <Button type="submit">Login</Button>
+          <Button type="submit">로그인</Button>
         </Form>
         <Footer>
-          <Link href="#" onClick={() => navigate("/Signup")}>
-            Don't have an account? Sign up
-          </Link>
+          계정이 없으신가요? <a href="/signup">회원가입</a>
         </Footer>
         {message && <p>{message}</p>}
       </Card>
