@@ -18,7 +18,7 @@ const MainPage = () => {
           <SectionDescription>
             학습 일정을 기록하고, 실시간 집중력 데이터를 확인하세요.
           </SectionDescription>
-          <Button onClick={() => navigate("/scheduler")}>
+          <Button onClick={() => navigate("/study-schedule")}>
             일정 관리하기
           </Button>
         </Section>
@@ -27,7 +27,7 @@ const MainPage = () => {
           <SectionDescription>
             심박수 기반 집중도를 분석하고 실시간 그래프로 확인하세요.
           </SectionDescription>
-          <Button onClick={() => navigate("/studyroom")}>
+          <Button onClick={() => navigate("/focus-analysis")}>
             집중도 분석하기
           </Button>
         </Section>
@@ -55,9 +55,14 @@ const Wrapper = styled.div`
   height: 100vh;
   padding: 20px;
   color: white;
-
+  padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
   @media (max-width: 768px) {
     padding: 15px;
+    padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
   }
 `;
 

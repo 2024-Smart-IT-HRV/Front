@@ -16,8 +16,9 @@ const Container = styled.div`
   gap: 1.5rem; /* 요소 간의 간격 추가 */
   background: linear-gradient(to bottom, #000000, #333333);
   overflow-y: auto; /* 세로 스크롤 활성화 */
+  padding-bottom: 14vh; /* Navbar 높이만큼 여유 공간 추가 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
 `;
-
 
 const ButtonGroup = styled.div`
   display: flex;
