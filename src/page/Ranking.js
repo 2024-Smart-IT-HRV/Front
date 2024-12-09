@@ -3,9 +3,11 @@ import styled from "styled-components";
 
 const RankingPage = () => {
   const mockData = [
-    { rank: 1, name: "홍길동", score: 1200 },
-    { rank: 2, name: "김철수", score: 1100 },
-    { rank: 3, name: "이영희", score: 1050 },
+    { rank: 1, name: "김종혁", score: 1200, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
+    { rank: 2, name: "김봉민", score: 1100, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
+    { rank: 3, name: "이지예", score: 1050, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
+    { rank: 3, name: "김도현", score: 1050, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
+    { rank: 5, name: "강전하", score: 1000, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
   ];
 
   return (
@@ -18,6 +20,7 @@ const RankingPage = () => {
         {mockData.map((user) => (
           <RankingItem key={user.rank}>
             <Rank>{user.rank}</Rank>
+            <Avatar src={user.image} alt={`${user.name} avatar`} />
             <Name>{user.name}</Name>
             <Score>{user.score}점</Score>
           </RankingItem>
@@ -35,6 +38,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  padding-bottom: 80px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
   background: linear-gradient(to bottom, #000000, #333333);
   height: 100vh;
   padding: 20px;
@@ -42,6 +48,22 @@ const Wrapper = styled.div`
 
   @media (max-width: 768px) {
     padding: 15px;
+  }
+`;
+
+const Avatar = styled.img`
+  width: 1rem;
+  height: 1rem;
+  // padding:1px;
+  border-radius: 100%;
+  margin-right: 10px;
+  border: 2px solid #333;
+  // background-color:grey;
+
+  @media (max-width: 768px) {
+    width: 2rem;
+    height: 2rem;
+    margin-right: -3rem;
   }
 `;
 
@@ -87,7 +109,7 @@ const RankingItem = styled.li`
   color: #000000;
   margin-bottom: 10px;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 5px;
 
   &:last-child {
     margin-bottom: 0;
@@ -117,9 +139,11 @@ const Name = styled.span`
 
 const Score = styled.span`
   font-size: 1rem;
-  color: #00796b;
+  color: dark;
+  font-weight:bold;
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
   }
 `;
+

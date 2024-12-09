@@ -3,16 +3,14 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-
 // Styled Components
 const Container = styled.div`
-  background-color: #f8f9fa;
+  background: linear-gradient(to bottom, #333333, #000000);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 `;
-
 
 const Card = styled.div`
   background: white;
@@ -23,9 +21,11 @@ const Card = styled.div`
   max-width: 400px;
 `;
 
-const Title = styled.h3`
-  text-align: center;
-  margin-bottom: 1.5rem;
+const Logo = styled.img`
+  display: block;
+  margin: 0 auto 1.5rem;
+  width: 62px;
+  height: 58px;
 `;
 
 const Form = styled.form`
@@ -47,14 +47,14 @@ const Input = styled.input`
   font-size: 1rem;
 
   &:focus {
-    border-color: #007bff;
+    border-color: #000000;
     outline: none;
     box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
   }
 `;
 
 const Button = styled.button`
-  background-color: #007bff;
+  background-color: #000000;
   color: white;
   border: none;
   padding: 0.75rem;
@@ -64,24 +64,15 @@ const Button = styled.button`
   font-size: 1rem;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #000000;
   }
 `;
 
 const Footer = styled.div`
   text-align: center;
   margin-top: 1rem;
+  text-decoration: underline;
 `;
-
-const Link = styled.a`
-  color: #007bff;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -94,42 +85,53 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await api.post("/auth/login", { email, password });
+
+      // 로그인 성공 메시지
       setMessage(response.data.message || "로그인 성공!");
-      localStorage.setItem("token", response.data.token); // JWT 저장
-      navigate("/loading"); // 메인 페이지로 이동
+
+      // JWT 저장
+      localStorage.setItem("token", response.data.token);
+
+      // HRV 데이터 여부 확인
+      const hasHRVData = response.data.hrvData; // 서버 응답에서 HRV 데이터 확인
+
+      // 페이지 이동
+      if (hasHRVData) {
+        navigate("/main"); // HRV 데이터가 있을 경우 메인 페이지로 이동
+      } else {
+        navigate("/loading"); // HRV 데이터가 없을 경우 로딩 페이지로 이동
+      }
     } catch (error) {
+      // 로그인 실패 메시지
       setMessage(error.response?.data?.error || "로그인 실패");
     }
   };
-  
 
   return (
     <Container>
       <Card>
-        <Title>Login</Title>
+        <Logo src="/logo.png" alt="Logo" />
         <Form onSubmit={handleSubmit}>
-          <Label>Email</Label>
+          <Label>이메일</Label>
           <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            placeholder="이메일을 입력하세요"
             required
           />
-          <Label>Password</Label>
+          <Label>비밀번호</Label>
           <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            placeholder="비밀번호를 입력하세요"
             required
           />
-          <Button type="submit">Login</Button>
+          <Button type="submit">로그인</Button>
         </Form>
         <Footer>
-          <Link href="#" onClick={() => navigate("/Signup")}>
-            Don't have an account? Sign up
-          </Link>
+          계정이 없으신가요? <a href="/signup">회원가입</a>
         </Footer>
         {message && <p>{message}</p>}
       </Card>

@@ -19,6 +19,7 @@ import {
   ChartTooltipContent,
 } from "./chart";
 
+
 // 차트 데이터 DB
 const datasets = {
   HrvData: [
@@ -82,14 +83,16 @@ const chartConfig = {
 export function StudyRoomChart({ datasetKey }: { datasetKey: DatasetKey }) {
   const [selectedDataset] = React.useState<DatasetKey>(datasetKey);
 
+
   // 선택한 데이터셋 가져오기
   const filteredData = [...datasets[selectedDataset]]; // readonly 배열을 일반 배열로 변환
 
-  
+
   return (
     <Card>
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
+
           <CardTitle>{selectedDataset} 차트</CardTitle>
           <CardDescription>선택한 데이터셋의 차트를 보여줍니다.</CardDescription>
         </div>

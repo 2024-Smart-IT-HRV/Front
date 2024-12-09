@@ -4,7 +4,7 @@ import axios from "../api";
 
 // Styled Components
 const Container = styled.div`
-  background-color: #f8f9fa;
+  background: linear-gradient(to bottom, #333333,#000000 );
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +44,7 @@ const Input = styled.input`
   font-size: 1rem;
 
   &:focus {
-    border-color: #007bff;
+    border-color: #000000;
     outline: none;
     box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
   }
@@ -61,13 +61,14 @@ const Button = styled.button`
   font-size: 1rem;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #000000;
   }
 `;
 
 const Footer = styled.div`
   text-align: center;
   margin-top: 1rem;
+  text-decoration: underline;
 `;
 
 const Message = styled.p`
@@ -79,9 +80,10 @@ const Message = styled.p`
 const Logo = styled.img`
   display: block; /* 가운데 정렬 */
   margin: 0 auto 1.5rem; /* 위, 아래 간격 설정 (중앙 정렬 포함) */
-  width: 64px; /* 너비 */
+  width: 62x; /* 너비 */
   height: 58px; /* 높이 */
 `;
+
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -100,7 +102,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/auth/signup", formData);
+      const response = await axios.post("/auth/signup", formData); //백엔드에서 정보 요청
       setMessage(response.data.message);
     } catch (error) {
       if (error.response) {
@@ -114,8 +116,7 @@ const Signup = () => {
   return (
     <Container>
       <Card>
-        <Logo src="/logo.png" alt="Logo" />
-        <Title>회원가입</Title>
+      <Logo src="/logo.png" alt="Logo" />
         <Form onSubmit={handleSubmit}>
           <Label>사용자 이름</Label>
           <Input

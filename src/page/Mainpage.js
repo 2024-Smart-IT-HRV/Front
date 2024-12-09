@@ -55,9 +55,14 @@ const Wrapper = styled.div`
   height: 100vh;
   padding: 20px;
   color: white;
-
+  padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
   @media (max-width: 768px) {
     padding: 15px;
+    padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
   }
 `;
 

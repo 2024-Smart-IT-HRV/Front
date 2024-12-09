@@ -26,6 +26,7 @@ function App() {
         <Route path='/loading' element={<Loadingpage />} />
         <Route path="/main" element={<Mainpage />} />
         <Route path='/scheduler' element={<Scheduler />} />
+        <Route path='/studyroom/:subject_id' element={<StudyRoom />} />
         <Route path='/studyroom' element={<StudyRoom />} />
         <Route path='/ranking' element={<Ranking />} />
         <Route path='/mypage' element={<MyPage />} />
@@ -33,6 +34,7 @@ function App() {
       </Routes>
       {location.pathname === '/main' && <Navbar />}
       {location.pathname === '/scheduler' && <Navbar />}
+      {location.pathname === '/studyroom/:subject_id' && <Navbar />}
       {location.pathname === '/studyroom' && <Navbar />}
       {location.pathname === '/ranking' && <Navbar />}
       {location.pathname === '/mypage' && <Navbar />}

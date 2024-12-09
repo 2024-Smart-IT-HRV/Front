@@ -11,9 +11,11 @@ const StudyRoom = () => {
     <Title>현우진의 16강</Title>
     <Subtitle>Subtitle</Subtitle>
     </Header>
+
     <StudyRoomChart datasetKey="HrvData" />
     <StudyRoomChart datasetKey="EegData" />
     <StudyRoomChart datasetKey="FocusData" />
+
     </Wrapper>
     
   );
@@ -64,4 +66,6 @@ const Subtitle = styled.h2`
 
 
 
+
 export default StudyRoom;
+
