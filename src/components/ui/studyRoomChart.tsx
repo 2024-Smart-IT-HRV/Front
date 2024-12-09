@@ -18,13 +18,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "./chart";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./select";
 
 // 차트 데이터 DB
 const datasets = {
@@ -74,6 +67,7 @@ const datasets = {
 
 type DatasetKey = keyof typeof datasets;
 
+
 const chartConfig = {
   former: {
     label: "이전 기록",
@@ -85,44 +79,19 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function StudyRoomChart() {
-  const [selectedDataset, setSelectedDataset] = React.useState<DatasetKey>("HrvData");
+export function StudyRoomChart({ datasetKey }: { datasetKey: DatasetKey }) {
+  const [selectedDataset] = React.useState<DatasetKey>(datasetKey);
 
   // 선택한 데이터셋 가져오기
   const filteredData = [...datasets[selectedDataset]]; // readonly 배열을 일반 배열로 변환
 
+  
   return (
     <Card>
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
-          <CardTitle>집중력 차트</CardTitle>
-          <CardDescription>선택한 데이터셋의 집중력을 보여주는 차트입니다</CardDescription>
-        </div>
-        <div className="flex space-x-4">
-          <Select
-            value={selectedDataset}
-            onValueChange={(value) =>
-              setSelectedDataset(value as "HrvData" | "EegData" | "FocusData")
-            }
-          >
-            <SelectTrigger
-              className="w-[160px] rounded-lg"
-              aria-label="Select dataset"
-            >
-              <SelectValue placeholder="Select Dataset" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem value="HrvData" className="rounded-lg text-white">
-                HRV Data
-              </SelectItem>
-              <SelectItem value="EegData" className="rounded-lg text-white">
-                EEG Data
-              </SelectItem>
-              <SelectItem value="FocusData" className="rounded-lg text-white">
-                Focus Data
-              </SelectItem>
-            </SelectContent>
-          </Select>
+          <CardTitle>{selectedDataset} 차트</CardTitle>
+          <CardDescription>선택한 데이터셋의 차트를 보여줍니다.</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">

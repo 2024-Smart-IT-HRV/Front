@@ -11,7 +11,9 @@ const StudyRoom = () => {
     <Title>현우진의 16강</Title>
     <Subtitle>Subtitle</Subtitle>
     </Header>
-    <StudyRoomChart/>
+    <StudyRoomChart datasetKey="HrvData" />
+    <StudyRoomChart datasetKey="EegData" />
+    <StudyRoomChart datasetKey="FocusData" />
     </Wrapper>
     
   );
