@@ -1,3 +1,5 @@
+// Front/scr/page/Login.js
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -77,33 +79,43 @@ const Footer = styled.div`
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // 비밀번호 표시 상태
   const [message, setMessage] = useState("");
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await api.post("/auth/login", { email, password });
+      const { user_id, token, message, hrvData: hasHRVData } = response.data;
 
-      // 로그인 성공 메시지
-      setMessage(response.data.message || "로그인 성공!");
+      if (!response.data || !user_id || !token) {
+        setMessage("로그인에 실패했습니다.");
+        return;
+      }
 
-      // JWT 저장
-      localStorage.setItem("token", response.data.token);
+      setMessage(message || "로그인 성공!");
+      localStorage.setItem("user_id", user_id);
+      localStorage.setItem("token", token);
 
-      // HRV 데이터 여부 확인
-      const hasHRVData = response.data.hrvData; // 서버 응답에서 HRV 데이터 확인
+      if (process.env.NODE_ENV === "development") {
+        console.log("Token:", token);
+        console.log("User ID:", user_id);
+      }
 
-      // 페이지 이동
+      setEmail(""); // 입력 필드 초기화
+      setPassword(""); // 입력 필드 초기화
+
       if (hasHRVData) {
-        navigate("/main"); // HRV 데이터가 있을 경우 메인 페이지로 이동
+        navigate("/main");
       } else {
-        navigate("/loading"); // HRV 데이터가 없을 경우 로딩 페이지로 이동
+        navigate("/loading");
       }
     } catch (error) {
-      // 로그인 실패 메시지
-      setMessage(error.response?.data?.error || "로그인 실패");
+      const errorMessage =
+        error.response?.data?.error || "로그인 요청 중 문제가 발생했습니다.";
+      console.error("Login failed:", errorMessage);
+      setMessage(errorMessage);
     }
   };
 
@@ -121,13 +133,30 @@ const Login = () => {
             required
           />
           <Label>비밀번호</Label>
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호를 입력하세요"
-            required
-          />
+          <div style={{ position: "relative" }}>
+            <Input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호를 입력하세요"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              {showPassword ? "숨기기" : "표시"}
+            </button>
+          </div>
           <Button type="submit">로그인</Button>
         </Form>
         <Footer>

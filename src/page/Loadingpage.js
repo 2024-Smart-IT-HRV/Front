@@ -14,11 +14,31 @@ const LoadingPageContainer = styled.div`
   text-align: center;
 `;
 
+const ProgressContainer = styled.div`
+  position: relative;
+  width: 80%;
+  height: 20px;
+  background-color: dimgray;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  overflow: hidden;
+`;
+
+const ProgressBar = styled.div`
+  height: 100%;
+  background-color: #1e90ff;
+  border-radius: 10px;
+`;
+
 const ProgressText = styled.div`
-  margin-top: 10px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
   font-size: 18px;
   font-weight: bold;
   color: white;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 const Button = styled.button`
@@ -29,8 +49,8 @@ const Button = styled.button`
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  background-color: white;
-  color: black;
+  background-color: #1e90ff;
+  color: white;
 
   &:disabled {
     opacity: 0.6;
@@ -73,11 +93,33 @@ const Message = styled.p`
   color: white;
 `;
 
+const Title = styled.h1`
+  font-size: 2.5rem;
+  color: white;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const Sign = styled.div`
+  background-color: #1e90ff;
+  margin-top:20px;
+  margin-bottom:20px;
+  color: white;
+  width:300px;
+  border-radius: 5px;
+  font-size:0.7rem;
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+`;
+
+
 const Loadingpage = () => {
   const [isRunning, setIsRunning] = useState(false); // 검사 시작/중지 상태
   const [progress, setProgress] = useState(0); // 진행률 (0 ~ 100)
   const navigate = useNavigate(); // 경로 이동을 위한 훅
-  const [color, setColor] = useState('red');
+  const [color, setColor] = useState('dimgray');
   const [startTime, setStartTime] = useState(null);
   const [reactionTime, setReactionTime] = useState([]);
   const [message, setMessage] = useState('검사 시작 버튼을 누르세요!');
@@ -162,19 +204,25 @@ const Loadingpage = () => {
   return (
     <LoadingPageContainer>
       <Container>
+        <Title>심박도 검사</Title>
+        <Sign>이 테스트는 사용자의 HRV 측정한 데이터를 통해 신경계 상태를 분석하고 집중도 분석에 활용 됩니다!</Sign>
         {countdown !== null ? (
           <GameBox bgColor="black">
             <p style={{ fontSize: '2rem', color: 'white' }}>{countdown}</p>
           </GameBox>
         ) : (
           <GameBox bgColor={color} onClick={handleClick}>
-            {color === 'red' ? '기다리세요' : '클릭하세요!'}
+            {color === 'red' && '기다리세요'}
+            {color === 'green' && '클릭하세요!'}
           </GameBox>
         )}
         <Message>{message}</Message>
       </Container>
       {isRunning ? (
-        <ProgressText>{progress}%</ProgressText>
+        <ProgressContainer>
+          <ProgressBar style={{ width: `${progress}%` }} />
+          <ProgressText>{progress}%</ProgressText>
+        </ProgressContainer>
       ) : (
         <Button onClick={Start} disabled={isRunning}>
           검사 시작
