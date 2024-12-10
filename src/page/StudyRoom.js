@@ -76,3 +76,4 @@ const Subtitle = styled.h2`
 
 
 export default StudyRoom;
+
