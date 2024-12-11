@@ -7,11 +7,21 @@ import api from "../api";
 
 // Styled Components
 const Container = styled.div`
-  background: linear-gradient(to bottom, #333333, #000000);
+  background: linear-gradient(to bottom, #000000, #4338ca);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
+`;
+
+const Header = styled.div`
+  text-align: center;
+  margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Card = styled.div`
@@ -121,8 +131,8 @@ const Login = () => {
 
   return (
     <Container>
+    <Logo src="/logo.png" alt="Logo" />
       <Card>
-        <Logo src="/logo.png" alt="Logo" />
         <Form onSubmit={handleSubmit}>
           <Label>이메일</Label>
           <Input

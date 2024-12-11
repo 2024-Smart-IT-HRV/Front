@@ -18,52 +18,62 @@ import {
   ChartTooltipContent,
 } from "./chart"
 const chartData = [
-  { browser: "chrome", visitors: 187, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 275, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+  { week: "월요일", focus: 187, fill: "var(--color-월요일)" },
+  { week: "화요일", focus: 200, fill: "var(--color-화요일)" },
+  { week: "수요일", focus: 275, fill: "var(--color-수요일)" },
+  { week: "목요일", focus: 173, fill: "var(--color-목요일)" },
+  { week: "금요일", focus: 90, fill: "var(--color-금요일)" },
+  { week: "토요일", focus: 90, fill: "var(--color-토요일)" },
+  { week: "일요일", focus: 90, fill: "var(--color-일요일)" },
 ]
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  focus: {
+    label: "집중도",
   },
-  chrome: {
-    label: "Chrome",
+  월요일: {
+    label: "월요일",
     color: "hsl(var(--chart-3))",
   },
-  safari: {
-    label: "Safari",
+  화요일: {
+    label: "화요일",
     color: "hsl(var(--chart-4))",
   },
-  firefox: {
-    label: "Firefox",
+  수요일: {
+    label: "수요일",
     color: "hsl(var(--chart-5))",
   },
-  edge: {
-    label: "Edge",
+  목요일: {
+    label: "목요일",
     color: "hsl(var(--chart-6))",
   },
-  other: {
-    label: "Other",
+  금요일: {
+    label: "금요일",
     color: "hsl(var(--chart-7))",
+  },
+  토요일: {
+    label: "토요일",
+    color: "hsl(var(--chart-8))",
+  },
+  일요일: {
+    label: "일요일",
+    color: "hsl(var(--chart-9))",
   },
 } satisfies ChartConfig
 
 export function MyFocusChart() {
   return (
-    <Card>
+    <>
       <CardHeader>
-        <CardTitle>Bar Chart - Active</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>2024년 12월 둘째주</CardTitle>
+        <CardDescription>집중도</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="browser"
+              dataKey="week"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
@@ -76,10 +86,10 @@ export function MyFocusChart() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Bar
-              dataKey="visitors"
+              dataKey="focus"
               strokeWidth={2}
               radius={8}
-              activeIndex={2}
+              // activeIndex={1}
               activeBar={({ ...props }) => {
                 return (
                   <Rectangle
@@ -97,12 +107,11 @@ export function MyFocusChart() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          지난 주 대비 집중도 5.2% 향상 <TrendingUp className="h-4 w-4" />
         </div>
       </CardFooter>
-    </Card>
+    </>
   )
 }
+
+

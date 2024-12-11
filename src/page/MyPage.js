@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(to bottom, #333333,#000000 );
+  background: linear-gradient(to bottom, #000000, #4338ca);
   height: 100vh;
   padding: 20px;
   color: white;
@@ -90,6 +90,7 @@ const ProfileCard = styled.div`
   width: 90%;
   max-width: 400px;
   border-radius: 10px;
+  justify-content: center;
   box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
   padding: 20px;
   text-align: center;

@@ -14,7 +14,7 @@ const StudyRoom = () => {
     <MainContent>
       <Section>
         <StudyRoomChart datasetKey="HrvData" />
-      </Section>
+      </Section>    
       <Section>
         <StudyRoomChart datasetKey="EegData" />
       </Section>
@@ -33,7 +33,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(to bottom, #333333,#000000 );
+  background: linear-gradient(to bottom, #000000, #4338ca);
   height: 100vh;
   padding: 20px;
   color: white;

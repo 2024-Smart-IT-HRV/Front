@@ -13,7 +13,7 @@ import {
   const mockData = [
 
     { 
-        rank: 1, 
+        rank:  1, 
         name: "김종혁",
         score: 1200, 
         image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' 
@@ -59,7 +59,7 @@ import {
         <TableBody>
           {mockData.map((user) => (
             <TableRow key={user.rank}>
-              <TableCell className="font-medium">{user.rank}</TableCell>
+              <TableCell className="text-left">{user.rank}등</TableCell>
               <TableCell>
                   <Avatar>
                         <AvatarImage src = {user.image} />
