@@ -8,7 +8,7 @@ const LoadingPageContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: black;
+  background: linear-gradient(to bottom, #000000, #4338ca);
   padding: 20px;
   font-family: 'Arial', sans-serif;
   text-align: center;
@@ -69,7 +69,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 80vh;
-  background-color: black;
   font-family: Arial, sans-serif;
 `;
 

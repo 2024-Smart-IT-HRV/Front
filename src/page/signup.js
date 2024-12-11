@@ -4,7 +4,7 @@ import axios from "../api";
 
 // Styled Components
 const Container = styled.div`
-  background: linear-gradient(to bottom, #333333,#000000 );
+  background: linear-gradient(to bottom, #000000, #4338ca);
   display: flex;
   justify-content: center;
   align-items: center;
