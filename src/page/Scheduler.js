@@ -1,10 +1,7 @@
-// Front/scr/page/Sceduler.js
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 
 const Container = styled.div`
   height: 100vh;
@@ -16,11 +13,12 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 1.5rem;
-  background: linear-gradient(to bottom, #000000, #4338ca);
+  bbackground: linear-gradient(to bottom,  #000000, #e11d48);
   overflow-y: auto;
   padding-bottom: 14vh;
   box-sizing: border-box;
 `;
+
 
 const ButtonGroup = styled.div`
   display: flex;
@@ -93,13 +91,15 @@ const DeleteButton = styled.button`
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  margin-right: 0.5rem;
-  width: 20px;
+  margin-right: 0.8rem;
+  width: 24px;
+  height: 24px;
 
   &:hover {
     color: #000000;
   }
 `;
+
 const TotalStudyTime = styled.div`
   font-size: 1rem;
   font-weight: bold;
@@ -107,10 +107,32 @@ const TotalStudyTime = styled.div`
   color: white;
   text-align: center;
 `;
-const Checkbox = styled.input`
-  margin-right: 1rem;
-  visibility: ${(props) => (props.hidden ? "hidden" : "visible")};
-  width: 20px;
+
+const Checkbox = styled.input.attrs({ type: "checkbox" })`
+  appearance: none; /* 기본 체크박스 스타일 제거 */
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ccc;
+  border-radius: 50%; /* 원형 모양 */
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  margin-right: 0.8rem;
+
+  &:checked {
+    background-color: #ffcc00; /* 노란 배경색 */
+    border-color: #ffcc00;
+
+    &::before {
+      content: "✓"; /* 체크 표시 추가 */
+      color: white;
+      font-size: 16px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 `;
 
 const TodoText = styled.p`
@@ -210,16 +232,17 @@ const DeleteModeButton = styled.button`
     background-color: ${(props) => (props.isDeleteMode ? "white" : "white")};
   }
 `;
+
 const Scheduler = () => {
-  const [todos, setTodos] = useState([]); // 과목 목록
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
-  const [newSubject, setNewSubject] = useState(""); // 새 과목 이름
-  const [isDeleteMode, setIsDeleteMode] = useState(false); // 삭제 모드 여부
-  const [date, setDate] = useState(""); // 현재 날짜
-  const [message, setMessage] = useState(""); // 사용자 메시지
+  const [todos, setTodos] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newSubject, setNewSubject] = useState("");
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [date, setDate] = useState("");
+  const [message, setMessage] = useState("");
+  const [checkedItems, setCheckedItems] = useState({});
   const navigate = useNavigate();
 
-  // 현재 날짜 설정
   useEffect(() => {
     const today = new Date();
     const formattedDate = `${today.getFullYear()}-${String(
@@ -228,92 +251,86 @@ const Scheduler = () => {
     setDate(formattedDate);
   }, []);
 
-// 서버에서 과목 목록 불러오기
-useEffect(() => {
-  const fetchSubjects = async () => {
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      const user_id = localStorage.getItem("user_id");
+      const token = localStorage.getItem("token");
+
+      if (!user_id || !token) {
+        setMessage("로그인이 필요합니다.");
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const response = await api.get(`/subjects`, {
+          headers: { Authorization: `Bearer ${token}` },
+          params: { user_id },
+        });
+        setTodos(response.data);
+      } catch (error) {
+        console.error("Failed to fetch subjects:", error.response?.data);
+        setMessage("과목 데이터를 가져오는 데 실패했습니다.");
+      }
+    };
+    fetchSubjects();
+  }, [navigate]);
+
+  const handleAddSubject = async () => {
     const user_id = localStorage.getItem("user_id");
     const token = localStorage.getItem("token");
 
     if (!user_id || !token) {
       setMessage("로그인이 필요합니다.");
-      navigate("/login");
+      return;
+    }
+
+    if (!newSubject.trim()) {
+      setMessage("과목명을 입력하세요.");
       return;
     }
 
     try {
-      const response = await api.get(`/subjects`, {
-        headers: { Authorization: `Bearer ${token}` },
-        params: { user_id }, // user_id 전달
-      });
-      setTodos(response.data);
+      const response = await api.post(
+        "/subjects",
+        { user_id, subject_name: newSubject },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setTodos([...todos, response.data.subject]);
+      setMessage("과목이 성공적으로 추가되었습니다.");
+      setNewSubject("");
+      setIsModalOpen(false);
     } catch (error) {
-      console.error("Failed to fetch subjects:", error.response?.data);
-      setMessage("과목 데이터를 가져오는 데 실패했습니다.");
+      console.error("Failed to add subject:", error.response?.data);
+      setMessage("과목을 추가할 수 없습니다.");
     }
   };
-  fetchSubjects();
-}, [navigate]);
 
-// 과목 추가 처리
-const handleAddSubject = async () => {
-  const user_id = localStorage.getItem("user_id");
-  const token = localStorage.getItem("token");
+  const handleDeleteSubject = async (subject_id) => {
+    const token = localStorage.getItem("token");
 
-  if (!user_id || !token) {
-    setMessage("로그인이 필요합니다.");
-    return;
-  }
-  
-  if (!newSubject.trim()) {
-    setMessage("과목명을 입력하세요.");
-    return;
-  }
+    if (!subject_id) {
+      setMessage("삭제할 과목의 ID를 찾을 수 없습니다.");
+      return;
+    }
 
-  try {
-    const response = await api.post(
-      "/subjects", // 엔드포인트 수정
-      { user_id, subject_name: newSubject },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    try {
+      await api.delete(`/subjects/${subject_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    setTodos([...todos, response.data.subject]); // 새로운 과목 추가
-    setMessage("과목이 성공적으로 추가되었습니다.");
-    setNewSubject(""); // 입력 필드 초기화
-    setIsModalOpen(false); // 모달 닫기
-  } catch (error) {
-    console.error("Failed to add subject:", error.response?.data);
-    setMessage("과목을 추가할 수 없습니다.");
-  }
-};
+      const updatedTodos = todos.filter((todo) => todo.subject_id !== subject_id);
+      setTodos(updatedTodos);
+      setMessage("과목이 성공적으로 삭제되었습니다.");
+    } catch (error) {
+      console.error("Failed to delete subject:", error.response?.data);
+      setMessage("과목을 삭제할 수 없습니다.");
+    }
+  };
 
-// 과목 삭제 처리
-const handleDeleteSubject = async (subject_id) => {
-  const token = localStorage.getItem("token");
-
-  if (!subject_id) {
-    setMessage("삭제할 과목의 ID를 찾을 수 없습니다.");
-    return;
-  }
-
-  try {
-    await api.delete(`/subjects/${subject_id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    const updatedTodos = todos.filter((todo) => todo.subject_id !== subject_id);
-    setTodos(updatedTodos); // 상태 업데이트로 화면에 반영
-    setMessage("과목이 성공적으로 삭제되었습니다.");
-
-  } catch (error) {
-    console.error("Failed to delete subject:", error.response?.data);
-    setMessage("과목을 삭제할 수 없습니다.");
-  }
-};
-
-
-  // 과목 클릭 시 상세 페이지 이동
-  const handleSubjectClick = (subject_id, subject_name) => {
-    navigate(`/studyroom/${subject_id}?subject_name=${encodeURIComponent(subject_name)}`);
+  const handleSubjectClick = (subject_id) => {
+    navigate(`/studyroom/${subject_id}`);
   };
 
   return (
@@ -329,20 +346,22 @@ const handleDeleteSubject = async (subject_id) => {
       </Header>
       {todos.map((todo) => (
         <TodoItem key={todo.subject_id}>
-        <TodoLeft>
-          {isDeleteMode ? (
-            <DeleteButton onClick={() => handleDeleteSubject(todo.subject_id)}>×</DeleteButton>
-          ) : (
-            <Checkbox
-              type="checkbox"
-              hidden={isDeleteMode}
-              onClick={() => handleSubjectClick(todo.subject_id, todo.subject_name)}
-            />
-          )}
-          <TodoText>{todo.subject_name}</TodoText>
-        </TodoLeft>
-        <TodoScore>{todo.focus_score && todo.focus_score.score ? `${todo.focus_score.score}점` : "점수 없음"}</TodoScore>
-      </TodoItem>
+          <TodoLeft>
+            {isDeleteMode ? (
+              <DeleteButton onClick={() => handleDeleteSubject(todo.subject_id)}>×</DeleteButton>
+            ) : (
+              <Checkbox
+                checked={!!checkedItems[todo.subject_id]}
+                onChange={() => setCheckedItems((prev) => ({
+                  ...prev,
+                  [todo.subject_id]: !prev[todo.subject_id],
+                }))}
+              />
+            )}
+            <TodoText onClick={() => handleSubjectClick(todo.subject_id)}>{todo.subject_name}</TodoText>
+          </TodoLeft>
+          <TodoScore>{todo.duration || 0}점</TodoScore>
+        </TodoItem>
       ))}
       <ButtonGroup>
         <AddButton onClick={() => setIsModalOpen(true)}>과목 추가</AddButton>

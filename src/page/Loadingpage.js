@@ -8,7 +8,7 @@ const LoadingPageContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(to bottom, #000000, #4338ca);
+  background: linear-gradient(to bottom,  #000000, #e11d48);
   padding: 20px;
   font-family: 'Arial', sans-serif;
   text-align: center;

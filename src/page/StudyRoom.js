@@ -42,8 +42,7 @@ const StudyRoom = () => {
   return (
     <Wrapper>
       <Header>
-        <Title>{subject_name}의 학습 분석</Title>
-        <Subtitle>Subject ID: {subject_id}</Subtitle>
+        <Title>학습 분석</Title>
       </Header>
 
       <MainContent>
@@ -68,7 +67,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(to bottom, #000000, #4338ca);
+  background: linear-gradient(to bottom,  #000000, #e11d48);
   height: 100vh;
   padding: 20px;
   color: white;

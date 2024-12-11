@@ -38,7 +38,7 @@ const chartConfig: ChartConfig = {
   },
   current: {
     label: "현재 기록",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-hrv))",
   },
 };
 
@@ -108,7 +108,7 @@ export const StudyRoomChart: React.FC<StudyRoomChartProps> = ({ subjectId }) => 
                   stopOpacity={0.1}
                 />
               </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillhrv" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
                   stopColor="var(--color-current)"
@@ -142,7 +142,7 @@ export const StudyRoomChart: React.FC<StudyRoomChartProps> = ({ subjectId }) => 
             <Area
               dataKey="hrv_data"
               type="natural"
-              fill="url(#fillMobile)"
+              fill="url(#fillhrv)"
               stroke="var(--color-current)"
               stackId="a"
             />
@@ -153,7 +153,6 @@ export const StudyRoomChart: React.FC<StudyRoomChartProps> = ({ subjectId }) => 
               stroke="var(--color-former)"
               stackId="a"
             />
-            <ChartLegend content={<ChartLegendContent />} />
           </AreaChart>
         </ChartContainer>
       </CardContent>

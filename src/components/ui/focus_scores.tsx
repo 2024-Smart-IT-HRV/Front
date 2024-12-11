@@ -29,13 +29,9 @@ interface FocusScoresChartProps {
 }
 
 const chartConfig: ChartConfig = {
-  former: {
-    label: "이전 기록",
-    color: "hsl(var(--chart-3))",
-  },
   current: {
     label: "현재 기록",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-focus))",
   },
 };
 
@@ -130,7 +126,6 @@ export const FocusScoresChart: React.FC<FocusScoresChartProps> = ({ subjectId })
               stroke="var(--color-current)"
               stackId="a"
             />
-            <ChartLegend content={<ChartLegendContent />} />
           </AreaChart>
         </ChartContainer>
       </CardContent>

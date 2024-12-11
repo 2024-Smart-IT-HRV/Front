@@ -4,7 +4,7 @@ import api from "../api";
 
 // Styled Components
 const Container = styled.div`
-  background: linear-gradient(to bottom, #000000, #4338ca);
+  background: linear-gradient(to bottom,  #000000, #e11d48);
   display: flex;
   justify-content: center;
   align-items: center;

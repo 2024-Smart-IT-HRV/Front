@@ -45,14 +45,11 @@ type DatasetKey = keyof typeof datasets;
 
 
 const chartConfig = {
-  // former: {
-  //   label: "이전 기록",
-  //   color: "hsl(var(--chart-3))",
-  // },
+
   current: {
     label: "현재 기록",
-    color: "hsl(var(--chart-2))",
-  },
+    color: "hsl(var(--chart-eeg))",
+  }
 } satisfies ChartConfig;
 
 export function EegChart({ datasetKey }: { datasetKey: DatasetKey }) {  const [selectedDataset] = React.useState<DatasetKey>(datasetKey);
@@ -78,19 +75,7 @@ export function EegChart({ datasetKey }: { datasetKey: DatasetKey }) {  const [s
         >
           <AreaChart data={filteredData}>
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-former)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-former)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="filleeg" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
                   stopColor="var(--color-current)"
@@ -126,18 +111,10 @@ export function EegChart({ datasetKey }: { datasetKey: DatasetKey }) {  const [s
             <Area
               dataKey="current"
               type="natural"
-              fill="url(#fillMobile)"
+              fill="url(#filleeg)"
               stroke="var(--color-current)"
               stackId="a"
             />
-            <Area
-              dataKey="former"
-              type="natural"
-              fill="url(#fillDesktop)"
-              stroke="var(--color-former)"
-              stackId="a"
-            />
-            <ChartLegend content={<ChartLegendContent />} />
           </AreaChart>
         </ChartContainer>
 

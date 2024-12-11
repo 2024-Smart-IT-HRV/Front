@@ -23,15 +23,6 @@ const MainPage = () => {
           </Button>
         </Section>
         <Section>
-          <SectionTitle> 집중도 분석</SectionTitle>
-          <SectionDescription>
-            심박수 기반 집중도를 분석하고 실시간 그래프로 확인하세요.
-          </SectionDescription>
-          <Button onClick={() => navigate("/focus-analysis")}>
-            집중도 분석하기
-          </Button>
-        </Section>
-        <Section>
           <SectionTitle> 랭킹 및 보상</SectionTitle>
           <SectionDescription>
             나의 학습 성과를 친구들과 비교하고, 보상을 획득하세요.
@@ -51,7 +42,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(to bottom, #000000, #4338ca);
+  background: linear-gradient(to bottom,  #000000, #e11d48); // rose 600
+
   height: 100vh;
   padding: 20px;
   color: white;
