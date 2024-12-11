@@ -16,7 +16,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 1.5rem;
-  background: linear-gradient(to bottom, #000000, #333333);
+  background: linear-gradient(to bottom, #000000, #4338ca);
   overflow-y: auto;
   padding-bottom: 14vh;
   box-sizing: border-box;

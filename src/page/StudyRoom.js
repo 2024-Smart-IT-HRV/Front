@@ -45,34 +45,68 @@ const StudyRoom = () => {
         <Title>{subject_name}의 학습 분석</Title>
         <Subtitle>Subject ID: {subject_id}</Subtitle>
       </Header>
-      <StudyRoomChart subjectId={Number(subject_id)} />
-      <EegChart datasetKey="EegData" />
-      <FocusScoresChart subjectId={Number(subject_id)} />
+
+      <MainContent>
+      <Section>
+       <StudyRoomChart subjectId={Number(subject_id)} />
+      </Section>    
+      <Section>
+       <EegChart datasetKey="EegData" />
+      </Section>
+      <Section>
+       <FocusScoresChart subjectId={Number(subject_id)} />
+      </Section>
+    </MainContent>
+
     </Wrapper>
   );
 };
 
 // Styled Components
 const Wrapper = styled.div`
-  height: 100vh;
-  margin: 0 auto;
-  width : 100%
-  padding: 2rem 2rem;
-  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 1.5rem;
-  background: linear-gradient(to bottom, #000000, #333333);
-  overflow-y: auto;
-  padding-bottom: 14vh;
-  box-sizing: border-box;
+  background: linear-gradient(to bottom, #000000, #4338ca);
+  height: 100vh;
+  padding: 20px;
   color: white;
+  padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
+  @media (max-width: 768px) {
+    padding: 15px;
+    padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
+  }
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
 
   @media (max-width: 768px) {
-    padding-left: 0px;
-    padding-right : 0px;
+    gap: 15px;
+  }
+`;
+
+const Section = styled.div`
+  background-color: #ffffff;
+  color: #000000;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 15px;
   }
 `;
 
