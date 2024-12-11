@@ -72,7 +72,7 @@ type DatasetKey = keyof typeof datasets;
 const chartConfig = {
   former: {
     label: "이전 기록",
-    color: "hsl(var(--chart-3))",
+    color: "hsl(var(--chart-1))",
   },
   current: {
     label: "현재 기록",

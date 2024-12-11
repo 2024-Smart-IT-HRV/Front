@@ -1,14 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
+import { RankTable } from "../components/ui/rankTable"
 const RankingPage = () => {
-  const mockData = [
-    { rank: 1, name: "김종혁", score: 1200, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
-    { rank: 2, name: "김봉민", score: 1100, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
-    { rank: 3, name: "이지예", score: 1050, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
-    { rank: 3, name: "김도현", score: 1050, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
-    { rank: 5, name: "강전하", score: 1000, image: 'https://cdn-icons-png.flaticon.com/512/159/159833.png' },
-  ];
 
   return (
     <Wrapper>
@@ -16,16 +9,12 @@ const RankingPage = () => {
         <Title>🏆 랭킹</Title>
         <Subtitle>학습 성과를 확인하고 경쟁해보세요!</Subtitle>
       </Header>
-      <RankingList>
-        {mockData.map((user) => (
-          <RankingItem key={user.rank}>
-            <Rank>{user.rank}</Rank>
-            <Avatar src={user.image} alt={`${user.name} avatar`} />
-            <Name>{user.name}</Name>
-            <Score>{user.score}점</Score>
-          </RankingItem>
-        ))}
-      </RankingList>
+      <MainContent>
+        <Section>
+        <RankTable />
+        </Section> 
+      </MainContent>
+
     </Wrapper>
   );
 };
@@ -38,13 +27,42 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-bottom: 80px; /* Navbar 높이만큼 여유 공간 추가 */
-  overflow-y: auto; /* 스크롤 활성화 */
-  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
-  background: linear-gradient(to bottom, #000000, #333333);
+  background: linear-gradient(to bottom, #333333,#000000 );
   height: 100vh;
   padding: 20px;
   color: white;
+  padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
+  @media (max-width: 768px) {
+    padding: 15px;
+    padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
+  }
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 15px;
+  }
+`;
+
+const Section = styled.div`
+  background-color: #ffffff;
+  color: #000000;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  text-align: center;
 
   @media (max-width: 768px) {
     padding: 15px;

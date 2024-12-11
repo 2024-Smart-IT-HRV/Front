@@ -1,4 +1,5 @@
 import React from "react";
+import { MyFocusChart } from "../components/ui/myFocusChart"
 import styled from "styled-components";
 
 const MyPage = () => {
@@ -27,6 +28,7 @@ const MyPage = () => {
           <Label>점수:</Label>
           <Value>{userData.score}점</Value>
         </ProfileItem>
+        <MyFocusChart/>
       </ProfileCard>
     </Wrapper>
   );
@@ -40,13 +42,18 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(to bottom, #000000, #333333);
+  background: linear-gradient(to bottom, #333333,#000000 );
   height: 100vh;
   padding: 20px;
   color: white;
-
+  padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
   @media (max-width: 768px) {
     padding: 15px;
+    padding-bottom: 150px; /* Navbar 높이만큼 여유 공간 추가 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  box-sizing: border-box; /* 패딩 포함한 높이 계산 */
   }
 `;
 
