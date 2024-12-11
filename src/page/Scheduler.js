@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 const Container = styled.div`
   height: 100vh;
@@ -261,7 +263,7 @@ const handleAddSubject = async () => {
     setMessage("로그인이 필요합니다.");
     return;
   }
-
+  
   if (!newSubject.trim()) {
     setMessage("과목명을 입력하세요.");
     return;
@@ -310,8 +312,8 @@ const handleDeleteSubject = async (subject_id) => {
 
 
   // 과목 클릭 시 상세 페이지 이동
-  const handleSubjectClick = (subject_id) => {
-    navigate(`/studyroom/${subject_id}`);
+  const handleSubjectClick = (subject_id, subject_name) => {
+    navigate(`/studyroom/${subject_id}?subject_name=${encodeURIComponent(subject_name)}`);
   };
 
   return (
@@ -334,12 +336,12 @@ const handleDeleteSubject = async (subject_id) => {
             <Checkbox
               type="checkbox"
               hidden={isDeleteMode}
-              onClick={() => handleSubjectClick(todo.subject_id)}
+              onClick={() => handleSubjectClick(todo.subject_id, todo.subject_name)}
             />
           )}
           <TodoText>{todo.subject_name}</TodoText>
         </TodoLeft>
-        <TodoScore>{todo.duration || 0}점</TodoScore>
+        <TodoScore>{todo.focus_score && todo.focus_score.score ? `${todo.focus_score.score}점` : "점수 없음"}</TodoScore>
       </TodoItem>
       ))}
       <ButtonGroup>

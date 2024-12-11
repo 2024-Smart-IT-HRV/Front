@@ -11,6 +11,7 @@ import Ranking from './page/Ranking';
 import MyPage from './page/MyPage';
 import Signup from './page/signup';
 
+
 function App() {
   const [authenticate, setAuthenticate] = useState(false)
   const PrivateRoute = () => {
@@ -34,7 +35,7 @@ function App() {
       </Routes>
       {location.pathname === '/main' && <Navbar />}
       {location.pathname === '/scheduler' && <Navbar />}
-      {location.pathname === '/studyroom/:subject_id' && <Navbar />}
+      {location.pathname === '/studyroom/:subject_id, subject_name' && <Navbar />}
       {location.pathname === '/studyroom' && <Navbar />}
       {location.pathname === '/ranking' && <Navbar />}
       {location.pathname === '/mypage' && <Navbar />}

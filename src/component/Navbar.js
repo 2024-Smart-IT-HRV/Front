@@ -50,14 +50,14 @@ const MenuItem = styled.li`
     }
 `;
 
-const Icon = styled.img`
+const SvgIcon = styled.svg`
     width: 24px;
     height: 24px;
     margin-bottom: 5px;
 
-    /* 활성화 상태에 따라 아이콘 색상 변경 */
-    filter: ${(props) => (props.active ? 'grayscale(0%)' : 'grayscale(100%)')};
-    opacity: ${(props) => (props.active ? 1 : 0.6)};
+    fill: ${(props) => (props.active ? 'black' : 'none')};
+    stroke: ${(props) => (props.active ? 'black' : 'gray')};
+    stroke-width: 2;
 
     @media (max-width: 768px) {
         width: 20px;
@@ -68,18 +68,37 @@ const Icon = styled.img`
 
 const Navbar = () => {
     const menuList = [
-        { name: '스케줄러', path: '/scheduler', image: 'https://cdn-icons-png.flaticon.com/512/6752/6752472.png' },
-        { name: '공부방', path: '/studyroom', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn31u9kl9f1eShHiJqdX3ICWmD6h5I5AYplA&s' },
-        { name: '홈', path: '/main', image: 'https://cdn-icons-png.flaticon.com/512/66/66760.png' },
-        { name: '랭킹', path: '/ranking', image: 'https://cdn-icons-png.flaticon.com/512/81/81632.png' },
-        { name: '마이', path: '/mypage', image: 'https://cdn-icons-png.flaticon.com/512/1358/1358034.png' },
+        { name: 'Home', path: '/main', svgPath: <path d="M3 12l9-9 9 9M4 10v10h5v-6h6v6h5V10" /> },
+        { 
+            name: 'Scheduler', 
+            path: '/scheduler', 
+            svgPath: (
+                <>
+                    <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+                    <path d="M8 2v4M16 2v4M3 10h18" />
+                </>
+            ) 
+        },
+        { 
+            name: 'Ranking', 
+            path: '/ranking', 
+            svgPath: (
+                <>
+                    <path d="M3 20v-6h4v6H3z" />
+                    <path d="M10 20V10h4v10h-4z" />
+                    <path d="M17 20v-4h4v4h-4z" />
+                </>
+            ) 
+        },
+        { name: 'My', path: '/mypage', svgPath: <path d="M12 2a5 5 0 015 5v2a5 5 0 01-10 0V7a5 5 0 015-5zm0 14c-5.33 0-8 2.67-8 5v2h16v-2c0-2.33-2.67-5-8-5z" /> },
     ];
+
     const [activeMenu, setActiveMenu] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
-        const currentMenu = menuList.find(menu => menu.path === location.pathname);
+        const currentMenu = menuList.find((menu) => menu.path === location.pathname);
         if (currentMenu) {
             setActiveMenu(currentMenu.name);
         }
@@ -97,11 +116,12 @@ const Navbar = () => {
                             navigate(menu.path);
                         }}
                     >
-                        <Icon 
-                            src={menu.image} 
-                            alt={`${menu.name} icon`} 
-                            active={activeMenu === menu.name} 
-                        />
+                        <SvgIcon
+                            active={activeMenu === menu.name}
+                            viewBox="0 0 24 24"
+                        >
+                            {menu.svgPath}
+                        </SvgIcon>
                         {menu.name}
                     </MenuItem>
                 ))}

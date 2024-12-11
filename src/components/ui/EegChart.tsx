@@ -22,65 +22,39 @@ import {
 
 // 차트 데이터 DB
 const datasets = {
-  HrvData: [
-    { time: "00:00", former: 240, current: 366 },
-    { time: "00:10", former: 52, current: 287 },
-    { time: "00:20", former: 155, current: 313 },
-    { time: "00:30", former: 230, current: 128 },
-    { time: "00:40", former: 120, current: 139 },
-    { time: "00:50", former: 129, current: 257 },
-    { time: "01:00", former: 186, current: 295 },
-    { time: "01:10", former: 149, current: 366 },
-    { time: "01:20", former: 142, current: 116 },
-    { time: "01:30", former: 165, current: 383 },
-    { time: "01:40", former: 93, current: 366 },
-    { time: "01:50", former: 99, current: 335 }
-],
+  
   EegData: [
-    { time: "00:00", former: 313, current: 36 },
-    { time: "00:10", former: 277, current: 283 },
-    { time: "00:20", former: 15, current: 312 },
-    { time: "00:30", former: 23, current: 124 },
-    { time: "00:40", former: 120, current: 135 },
-    { time: "00:50", former: 129, current: 257 },
-    { time: "01:00", former: 186, current: 295 },
-    { time: "01:10", former: 149, current: 366 },
-    { time: "01:20", former: 142, current: 116 },
-    { time: "01:30", former: 165, current: 383 },
-    { time: "01:40", former: 93, current: 366 },
-    { time: "01:50", former: 99, current: 335 }
+    { time: "00:00",  current: 36 },
+    { time: "00:10",  current: 283 },
+    { time: "00:20",  current: 312 },
+    { time: "00:30",  current: 124 },
+    { time: "00:40",  current: 135 },
+    { time: "00:50",  current: 257 },
+    { time: "01:00",  current: 295 },
+    { time: "01:10",  current: 366 },
+    { time: "01:20",  current: 116 },
+    { time: "01:30",  current: 383 },
+    { time: "01:40",  current: 366 },
+    { time: "01:50",  current: 335 }
 ],
-  FocusData: [
-    { time: "00:00", former: 240, current: 366 },
-    { time: "00:10", former: 52, current: 287 },
-    { time: "00:20", former: 155, current: 313 },
-    { time: "00:30", former: 230, current: 128 },
-    { time: "00:40", former: 120, current: 139 },
-    { time: "00:50", former: 129, current: 257 },
-    { time: "01:00", former: 186, current: 295 },
-    { time: "01:10", former: 149, current: 366 },
-    { time: "01:20", former: 142, current: 116 },
-    { time: "01:30", former: 165, current: 383 },
-    { time: "01:40", former: 93, current: 366 },
-    { time: "01:50", former: 99, current: 335 }
-]
+  
 } as const;
 
 type DatasetKey = keyof typeof datasets;
 
 
 const chartConfig = {
-  former: {
-    label: "이전 기록",
-    color: "hsl(var(--chart-3))",
-  },
+  // former: {
+  //   label: "이전 기록",
+  //   color: "hsl(var(--chart-3))",
+  // },
   current: {
     label: "현재 기록",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 
-export function StudyRoomChart({ datasetKey }: { datasetKey: DatasetKey }) {
+export function EegChart({ datasetKey }: { datasetKey: DatasetKey }) {
   const [selectedDataset] = React.useState<DatasetKey>(datasetKey);
 
 

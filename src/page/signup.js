@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "../api";
+import api from "../api";
 
 // Styled Components
 const Container = styled.div`
@@ -102,7 +102,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/auth/signup", formData); //백엔드에서 정보 요청
+      const response = await api.post("/auth/signup", formData); //백엔드에서 정보 요청
       setMessage(response.data.message);
     } catch (error) {
       if (error.response) {

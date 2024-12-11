@@ -18,7 +18,7 @@ const MainPage = () => {
           <SectionDescription>
             학습 일정을 기록하고, 실시간 집중력 데이터를 확인하세요.
           </SectionDescription>
-          <Button onClick={() => navigate("/study-schedule")}>
+          <Button onClick={() => navigate("/scheduler")}>
             일정 관리하기
           </Button>
         </Section>
